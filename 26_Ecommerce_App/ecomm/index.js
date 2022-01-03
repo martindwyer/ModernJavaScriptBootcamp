@@ -2,6 +2,7 @@ const keys = require("./config/keys");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const userRepo = require("./repositories/user");
 
 //Connect to MongoDB database
 mongoose.connect(keys.MongoURI);
@@ -25,9 +26,17 @@ app.get("/", (req, res) => {
   </div>`);
 });
 
-app.post("/", (req, res) => {
-  console.log(req.body);
-  res.send("Account Created");
+app.post("/", async (req, res) => {
+  const { email, password } = req.body;
+  const existingUser = await userRepo.getOneBy({ email });
+  if (existingUser) {
+    return res.send("Email in use");
+  } else if (password !== passwordConfirmation) {
+    return res.send("passwords must match");
+  } else {
+    userRepo.create({ email, password });
+    res.send("Account Created");
+  }
 });
 
 app.listen(3000, () => {

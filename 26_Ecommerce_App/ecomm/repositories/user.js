@@ -1,4 +1,5 @@
 const fs = require("fs");
+const crypto = require("crypto");
 
 class UserRepository {
   constructor(filename) {
@@ -24,12 +25,60 @@ class UserRepository {
 
     return data;
   }
+
+  async create(attrs) {
+    attrs.id = this.randomId();
+    const records = await this.getAll();
+    records.push(attrs);
+    await this.writeAll(records);
+  }
+
+  async writeAll(records) {
+    await fs.promises.writeFile(
+      this.filename,
+      JSON.stringify(records, null, 2)
+    );
+  }
+
+  randomId() {
+    return crypto.randomBytes(4).toString("hex");
+  }
+
+  async getOne(id) {
+    const records = await this.getAll();
+    return records.find((record) => record.id === id);
+  }
+
+  async update(id, obj) {
+    const records = await this.getAll();
+    const user = records.find((record) => record.id === id);
+    if (!user) {
+      throw new Error(`Record with id of ${id} not found`);
+    }
+    Object.assign(user, obj);
+    await this.writeAll(records);
+  }
+
+  async getOneBy(filters) {
+    const records = await this.getAll();
+    for (let record of records) {
+      let found = true;
+      for (let key in filters) {
+        if (record[key] != filters[key]) {
+          let found = false;
+        }
+      }
+      if (found) {
+        return record;
+      }
+    }
+  }
+
+  async delete(id) {
+    const records = await this.getAll();
+    const filteredRecords = records.filter((record) => record.id != id);
+    await this.writeAll(filteredRecords);
+  }
 }
 
-const test = async () => {
-  const repo = new UserRepository("users.json");
-  const users = await repo.getAll();
-  console.log(users);
-};
-
-test();
+module.exports = new UserRepository("users.json");
