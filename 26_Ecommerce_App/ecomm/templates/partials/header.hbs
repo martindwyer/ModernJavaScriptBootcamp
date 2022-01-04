@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <title>{{ title }}</title>
+
+</head>
+
+<body>
+    
+    <main>
+
+        <h1>{{ title }}</h1>
+        <h3>{{ page }} </h3>
+        {{#if email}}
+        <h5>Welcome {{ email }} !</h5>
+        <a href="/signout">Sign Out</a>
+        {{else}}
+        <a href="/signin">Sign In</a>
+        {{/if}}

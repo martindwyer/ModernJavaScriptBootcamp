@@ -10,7 +10,9 @@
   "author": "Martin Dwyer",
   "license": "ISC",
   "dependencies": {
+    "cookie-session": "^2.0.0",
     "express": "^4.17.2",
+    "hbs": "^4.2.0",
     "mongoose": "^6.1.4",
     "nodemon": "^2.0.15"
   }

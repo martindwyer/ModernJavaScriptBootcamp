@@ -1,6 +1,7 @@
 const fs = require("fs");
 const crypto = require("crypto");
-
+const util = require("util");
+const scrypt = util.promisify(crypto.scrypt);
 class UserRepository {
   constructor(filename) {
     if (!filename) {
@@ -28,9 +29,27 @@ class UserRepository {
 
   async create(attrs) {
     attrs.id = this.randomId();
+
+    const salt = crypto.randomBytes(8).toString("hex");
+    const derivedKey = await scrypt(attrs.password, salt, 64);
+
     const records = await this.getAll();
-    records.push(attrs);
+    const record = {
+      ...attrs,
+      password: `${derivedKey.toString("hex")}.${salt}`,
+    };
+
+    records.push(record);
+
     await this.writeAll(records);
+
+    return record;
+  }
+
+  async comparePasswords(saved, supplied) {
+    const [hashed, salt] = saved.split(".");
+    const derivedKey = await scrypt(supplied, salt, 64);
+    return hashed === derivedKey.toString("hex");
   }
 
   async writeAll(records) {
@@ -59,13 +78,27 @@ class UserRepository {
     await this.writeAll(records);
   }
 
+  async getOneByEmail(email) {
+    const records = await this.getAll();
+
+    for (let record of records) {
+      if (record.email === email) {
+        return record;
+        break;
+      }
+    }
+  }
+
+  // This needs more testing - failed in production
   async getOneBy(filters) {
     const records = await this.getAll();
+
     for (let record of records) {
       let found = true;
       for (let key in filters) {
         if (record[key] != filters[key]) {
           let found = false;
+          break;
         }
       }
       if (found) {

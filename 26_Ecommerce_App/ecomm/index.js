@@ -1,8 +1,13 @@
 const keys = require("./config/keys");
-const express = require("express");
+const express = require("express"); // Server for application
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const userRepo = require("./repositories/user");
+const cookieSession = require("cookie-session");
+const mongoose = require("mongoose"); // For working with MongoDB
+const authRouter = require("./routes/admin/auth");
+
+const path = require("path");
+
+const hbs = require("hbs");
 
 //Connect to MongoDB database
 mongoose.connect(keys.MongoURI);
@@ -10,34 +15,34 @@ mongoose.connect(keys.MongoURI);
 // Initializing our express server
 const app = express();
 
+// Setting up views and view paths
+const publicDirectoryPath = path.join(__dirname, "./public");
+const viewsPath = path.join(__dirname, "./templates/views");
+const partialsPath = path.join(__dirname, "./templates/partials");
+app.set("view engine", "hbs");
+app.set("views", viewsPath);
+hbs.registerPartials(partialsPath);
+
 // To use bodyParser middleware on all requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Setting up cookie handling with keys for encryption
+app.use(
+  cookieSession({
+    keys: ["random!_+84j4)*(_!string"],
+  })
+);
+
 app.get("/", (req, res) => {
-  res.send(`
-  <div>
-    <form method="POST">
-      <input name="email" placeholder="email" />
-      <input name="password" placeholder="password" />
-      <input name="passwordconfirmation" placeholder="password confirmation" />
-      <button>Sign Up</button>
-    </form>
-  </div>`);
+  res.render("index", {
+    req,
+    title: "Ecommerce Store Application",
+    page: "Home",
+  });
 });
 
-app.post("/", async (req, res) => {
-  const { email, password } = req.body;
-  const existingUser = await userRepo.getOneBy({ email });
-  if (existingUser) {
-    return res.send("Email in use");
-  } else if (password !== passwordConfirmation) {
-    return res.send("passwords must match");
-  } else {
-    userRepo.create({ email, password });
-    res.send("Account Created");
-  }
-});
+app.use(authRouter);
 
 app.listen(3000, () => {
   console.log("express listening");
