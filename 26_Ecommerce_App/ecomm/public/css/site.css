@@ -1,0 +1,40 @@
+.page-content {
+    width: min(90vw, 1200px);
+    min-height: 60vh;
+    margin: 0 auto;
+}
+
+.brand-logo {
+    padding-left: 2rem !important;
+}
+
+#nav-mobile {
+    padding-right: 2rem;
+}
+
+#nav-mobile>li:nth-child(1) {
+    font-weight: 800;
+
+}
+
+.sidenav-overlay {
+    background-color: rgba(0, 0, 0, 0) !important;
+}
+
+ul.sidenav {
+    padding-left: 1.5rem;
+}
+
+ul.sidenav>li:nth-child(1),
+ul.sidenav>li:nth-child(2) {
+    font-weight: 800 !important;
+}
+
+.footer-copyright {
+    position: fixed;
+    overflow: hidden;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: .25rem 0;
+}

@@ -1,32 +1,39 @@
 const express = require("express");
-const userRepo = require("../../repositories/user");
+const bcrypt = require("bcrypt");
 const router = express.Router();
 
-const signup = require("../../views/admin/auth/signup");
-const signin = require("../../views/admin/auth/signin");
+const User = require("../../repositories/user");
+
+const siteTitle = "CloudForest";
 
 router.get("/signup", (req, res) => {
   res.render("./auth/signup", {
     req,
-    title: "Ecommerce Application",
+    title: siteTitle,
     page: "Sign Up",
   });
 });
 
 router.post("/signup", async (req, res) => {
   const { email, password, passwordConfirmation } = req.body;
-  console.log(email, password, passwordConfirmation);
-  const existingUser = await userRepo.getOneByEmail(email);
-  console.log(existingUser);
+  const existingUser = await User.findOne({ email }).exec();
   if (existingUser) {
     return res.send("Email in use");
   } else if (password !== passwordConfirmation) {
     return res.send("passwords must match");
   } else {
-    const user = await userRepo.create({ email, password });
+    const salt = await bcrypt.genSalt(10);
+    const passHash = await bcrypt.hash(password, salt);
+    const user = new User({ email: email, password: passHash, admin: false });
+    await user.save((err) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+
     req.session.userId = user.id; // added in by cookieSession
     res.render("index", {
-      title: "Ecommerce Application",
+      title: siteTitle,
       page: "Home",
       email: user.email,
     });
@@ -34,22 +41,23 @@ router.post("/signup", async (req, res) => {
 });
 
 router.get("/signin", (req, res) => {
-  res.render("./auth/signin", { page: "Sign In" });
+  res.render("./auth/signin", {
+    title: siteTitle,
+    page: "Sign In",
+  });
 });
 
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await userRepo.getOneByEmail(email);
+  const user = await User.findOne({ email: email });
 
   if (!user) {
     return res.send("Email not found");
   }
 
-  const validPassword = await userRepo.comparePasswords(
-    user.password,
-    password
-  );
+  const validPassword = await bcrypt.compare(password, user.password);
+  console.log(password, user.password);
 
   if (!validPassword) {
     return res.send("invalid password");
@@ -58,7 +66,7 @@ router.post("/signin", async (req, res) => {
   req.session.userId = user.id;
 
   res.render("index", {
-    title: "Ecommerce Application",
+    title: siteTitle,
     page: "Home",
     email: user.email,
   });
@@ -67,7 +75,7 @@ router.post("/signin", async (req, res) => {
 router.get("/signout", (req, res) => {
   req.session = null;
   res.render("index", {
-    title: "Ecommerce Application",
+    title: siteTitle,
     page: "Home",
   });
 });

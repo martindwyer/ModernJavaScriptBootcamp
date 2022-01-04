@@ -1,27 +1,22 @@
-const keys = require("./config/keys");
 const express = require("express"); // Server for application
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
-const mongoose = require("mongoose"); // For working with MongoDB
 const authRouter = require("./routes/admin/auth");
-
 const path = require("path");
-
 const hbs = require("hbs");
-
-//Connect to MongoDB database
-mongoose.connect(keys.MongoURI);
 
 // Initializing our express server
 const app = express();
 
-// Setting up views and view paths
+// Setting up views, view paths and static directorys
 const publicDirectoryPath = path.join(__dirname, "./public");
 const viewsPath = path.join(__dirname, "./templates/views");
 const partialsPath = path.join(__dirname, "./templates/partials");
+
 app.set("view engine", "hbs");
 app.set("views", viewsPath);
 hbs.registerPartials(partialsPath);
+app.use(express.static("public"));
 
 // To use bodyParser middleware on all requests
 app.use(bodyParser.json());
@@ -37,7 +32,7 @@ app.use(
 app.get("/", (req, res) => {
   res.render("index", {
     req,
-    title: "Ecommerce Store Application",
+    title: "CloudForest",
     page: "Home",
   });
 });

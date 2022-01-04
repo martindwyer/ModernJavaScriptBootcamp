@@ -10,6 +10,7 @@
   "author": "Martin Dwyer",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cookie-session": "^2.0.0",
     "express": "^4.17.2",
     "hbs": "^4.2.0",
