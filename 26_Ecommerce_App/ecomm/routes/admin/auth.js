@@ -53,14 +53,16 @@ router.post("/signin", async (req, res) => {
   const user = await User.findOne({ email: email });
 
   if (!user) {
-    return res.send("Email not found");
+    return res.render("./auth/signin", { emailError: "Email not found" });
   }
 
   const validPassword = await bcrypt.compare(password, user.password);
   console.log(password, user.password);
 
   if (!validPassword) {
-    return res.send("invalid password");
+    return res.render("./auth/signin", {
+      passwordError: "Email and password combination not on file",
+    });
   }
 
   req.session.userId = user.id;

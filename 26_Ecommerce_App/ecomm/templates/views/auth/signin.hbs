@@ -1,12 +1,26 @@
 {{> header }}
 <div class="page-content">
-  <h4>Please enter your email and password to sign in.</h4>
-  <form method="POST">
-    <input name="email" placeholder="email" />
-    <input name="password" placeholder="password" />
+  <h4 class="center-align">Online Shopping Solution</h4>
+  <h4 class="center-align"><img src="/images/store.png" height="200" /></h4>
 
-    <button>Sign In</button>
+  <form id="sigin-form" method="POST">
+    <h6>Please enter your email and password to sign in.</h6>
+    <input name="email" id="email" placeholder="email" />
+    <input name="password" id="password" placeholder="password" />
+
+    <button class="waves-effect waves-dark btn">Sign In</button>
+    <div id="signin-error">
+      {{#if emailError}}
+      {{emailError}}
+      {{/if}}
+      {{#if passwordError}}
+      {{passwordError}}
+      {{/if}}
+    </div>
   </form>
+
 </div>
+
+<script src="/js/signin-validation.js"></script>
 
 {{> footer }}

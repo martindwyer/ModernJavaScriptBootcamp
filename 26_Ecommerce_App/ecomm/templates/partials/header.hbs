@@ -4,7 +4,7 @@
 <head>
 
     <title>{{ title }}</title>
-    <link rel="icon" type="image/png" href="/images/cloud-1.png" />
+    <link rel="icon" type="image/png" href="/images/store.png" />
 
     {{!-- Compiled and minified CSS from Materialize.css --}}
     <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
@@ -22,8 +22,9 @@
         
         <div class="navbar-fixed">
             <nav>
-                <div class="nav-wrapper blue">
-                    <a href="/" class="brand-logo">{{ title }}</a>
+                <div class="nav-wrapper teal lighten-2">
+                    <div class="container">
+                    <a href="/" class="brand-logo"><i class="large material-icons">cloud_download</i>{{ title }}</a>
                     <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -37,6 +38,7 @@
                         {{/if}}
                         <li><a href="/">Home</a></li>
                     </ul>
+                    </div>
                 </div>
             </nav>
 
@@ -52,5 +54,3 @@
             </ul>
 
         </div>
-        <h4 class="center-align">A Forest of Shopping</h4>
-        <h4 class="center-align">On the Cloud&nbsp;<img src="/images/cloud-1.png" height="35" /></h4>
