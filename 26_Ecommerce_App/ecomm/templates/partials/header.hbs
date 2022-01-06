@@ -3,12 +3,14 @@
 
 <head>
 
-    <title>{{ title }}</title>
-    <link rel="icon" type="image/png" href="/images/store.png" />
+    <title>Commerce Store</title>
+    <link rel="icon" type="image/png" href="/images/icon.png" />
 
-    {{!-- Compiled and minified CSS from Materialize.css --}}
-    <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/material-icons.css" />
+    {{!-- Compiled and minified CSS from Bulma --}}
+    <link rel="stylesheet" type="text/css" href="/css/bulma.min.css">
+
+    {{!-- Compiled and minified CSS from FontAwesome --}}
+    <link rel="stylesheet" type="text/css" href="/css/fontawesome/css/all.css">
 
     {{!-- Site specific css from static directory --}}
     <link rel="stylesheet" type="text/css" href="/css/site.css" />
@@ -16,41 +18,68 @@
 
 </head>
 
-<body>
+<body class="has-navbar-fixed-top">
 
     <main>
-        
-        <div class="navbar-fixed">
-            <nav>
-                <div class="nav-wrapper teal lighten-2">
-                    <div class="container">
-                    <a href="/" class="brand-logo"><i class="large material-icons">cloud_download</i>{{ title }}</a>
-                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
 
-                    <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        
-                        {{#if email}}
-                        <li>Welcome {{ email }} !</li>
-                        <li><a href="/signout">Sign Out</a></li>
-                        {{else}}
-                        <li><a href="/signin">Sign In</a></li>
-                        <li><a href="/signup">Sign Up</a></li>
-                        {{/if}}
-                        <li><a href="/">Home</a></li>
-                    </ul>
+
+        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a id="logo-box" class="navbar-item" href="/">
+                    <i class="fas fa-cloud"></i>
+                    <h3><span class="logo-font">{{title}}</span></h3>
+                </a>
+
+                <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                    data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-start">
+                    <a href="/" class="navbar-item">
+                        Home
+                    </a>
+
+                    {{#if admin}}
+
+                    <a href="/admin/products" class="navbar-item">
+                        Products
+                    </a>
+                    <a href="/admin/users" class="navbar-item">
+                        Users
+                    </a>
+                    <a href="/admin/sales" class="navbar-item">
+                        Sales
+                    </a>
+                    <a href="/admin/dashboard" class="navbar-item">
+                        Dashboard
+                    </a>
+
+                    {{/if}}
+                </div>
+
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            {{#if email}}
+                            <div id="welcome-message">Welcome {{email}} !</div>
+                            <a href="/signout" class="button is-primary">
+                                <strong>Sign Out</strong>
+                            </a>
+                            {{else }}
+                            <a href="/signup" class="button is-primary">
+                                <strong>Sign up</strong>
+                            </a>
+                            <a href="/signin" class="button is-light">
+                                Log in
+                            </a>
+                            {{/if}}
+                        </div>
                     </div>
                 </div>
-            </nav>
-
-            <ul id="mobile-demo" class="sidenav">
-                <li>Menu</li>
-                {{#if email}}
-                <li id="welcome-message">Welcome {{ email }} !</li>
-                <li><a href="/signout">Sign Out</a></li>
-                {{else}}
-                <li><a href="/signin">Sign In</a></li>
-                <li><a href="/signup">Sign Up</a></li>
-                {{/if}}
-            </ul>
-
-        </div>
+            </div>
+        </nav>

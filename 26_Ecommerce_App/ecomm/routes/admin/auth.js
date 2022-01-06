@@ -4,7 +4,7 @@ const router = express.Router();
 
 const User = require("../../repositories/user");
 
-const siteTitle = "CloudForest";
+const siteTitle = "E-Commerce Store";
 
 router.get("/signup", (req, res) => {
   res.render("./auth/signup", {
@@ -36,6 +36,7 @@ router.post("/signup", async (req, res) => {
       title: siteTitle,
       page: "Home",
       email: user.email,
+      admin: user.admin,
     });
   }
 });
@@ -66,11 +67,13 @@ router.post("/signin", async (req, res) => {
   }
 
   req.session.userId = user.id;
+  req.session.admin = user.admin;
 
   res.render("index", {
     title: siteTitle,
     page: "Home",
     email: user.email,
+    admin: user.admin,
   });
 });
 

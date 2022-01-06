@@ -8,7 +8,10 @@ mongoose.connect(keys.MongoURI);
 const userSchema = new Schema({
   email: String,
   password: String,
-  admin: Boolean,
+  admin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const User = mongoose.model("User", userSchema);

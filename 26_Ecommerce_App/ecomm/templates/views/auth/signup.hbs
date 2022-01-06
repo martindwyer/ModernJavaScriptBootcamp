@@ -2,15 +2,22 @@
 
 <div class="page-content">
 
-  <h4 class="center-align">Online Shopping Solution</h4>
-  <h4 class="center-align"><img src="/images/store.png" height="200" /></h4>
+  <div id="signup-page">
+    <h3>Sign up for {{ title }}</h3>
+    <div id="signup-image">
+      <div class="image"><img src="/images/logo.png" /></div>
+      <div class="image"><img src="/images/store.png" /></div>
+    </div>
+
+  </div>
+
 
   <form id="signup-form" method="POST">
     <h6>Provide the required information in order to sign up for {{ title }} </h6>
-    <input name="email" id="signup-email" placeholder="email" />
-    <input name="password" id="signup-password" placeholder="password" />
-    <input name="passwordConfirmation" id="signup-password-confirm" placeholder="password confirmation" />
-    <button class="waves-effect waves-light btn">Sign Up</button>
+    <input class="input is-normal" name="email" id="signup-email" placeholder="email" />
+    <input  class="input is-normal" name="password" id="signup-password" placeholder="password" />
+    <input  class="input is-normal" name="passwordConfirmation" id="signup-password-confirm" placeholder="password confirmation" />
+    <button class="button is-primary">Sign Up</button>
     <div id="signup-error"></div>
   </form>
 

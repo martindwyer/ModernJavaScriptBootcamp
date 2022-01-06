@@ -77,3 +77,8 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+
+# style sheet resources
+min.bulma.css
+fontawesome/

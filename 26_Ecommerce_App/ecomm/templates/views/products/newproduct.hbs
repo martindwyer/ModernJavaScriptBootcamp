@@ -1,0 +1,63 @@
+{{>header}}
+
+<div class="page-content">
+
+    <form id="new-product-form" method="POST" >
+        <h3>New Product Entry Form</h3>
+
+        <div class="select">
+            <select name="productType">
+                <option value="">Choose the type of product to be added </option>
+                <option value="book">Book</option>
+                <option value="electronic">Electronic</option>
+                <option value="paperback">Essential</option>
+            </select>
+        </div>
+        <input class="input is-normal" type="text" name="title" placeholder="Title" />
+        <input class="input is-normal" type="date" name="publicationDate" placeholder="Publication Date" />
+        <input class="input is-normal" type="text" name="author" placeholder="Author" />
+        <div class="select">
+            <select name="coverType">
+                <option value="">Choose cover type on this book</option>
+                <option value="ebook">e-Book</option>
+                <option value="hardcover">Hardcover</option>
+                <option value="paperback">Paperback</option>
+            </select>
+        </div>
+        <h4 style="margin-top: 1rem;">Target Audience</h4>
+        <label class="checkbox">
+            <input type="checkbox" id="upTo7" name="upToSeven" value="yes">
+                Up to 7 yrs old
+        </label>
+        <label class="checkbox" >
+            <input type="checkbox" id="8to12" name="eightToTwelve" value="yes">
+                8 to 12 yrs old
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="teen" name="teen" value="yes">
+                Teen
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="youngAdult" name="youngAdult" value="yes">
+                Young Adult
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="adult" name="adult" value="yes">
+                Adult
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="senior" name="senior" value="yes">
+                Seniors
+        </label>
+        <input class="input is-normal" type="number" step=".01" name="price" placeholder="Price" />
+        <input class="input is-normal" type="number" step=".01" name="shippingCost" placeholder="Shipping Cost" />
+        <input class="input is-normal" type="text" name="publisher" placeholder="Publisher" />
+        <input class="input is-normal" type="text" name="pages" placeholder="Pages in the book" />
+      
+        <input class="input is-normal" type="text" name="bookImageUrl" placeholder="image" />
+        <button class="button is-primary">Submit</button>
+    </form>
+</div>
+
+
+{{>footer}}
