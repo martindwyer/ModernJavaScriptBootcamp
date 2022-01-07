@@ -1,0 +1,99 @@
+{{>header }}
+
+<div class="page-content">
+
+    <div class="tabs is-centered">
+        <ul>
+            <li id="products" class="is-active"><a>Products</a></li>
+            <li id="users"><a>Users</a></li>
+            <li id="sales"><a>Sales</a></li>
+        </ul>
+    </div>
+
+    <section id="product-menu">
+
+        <div class="columns">
+            <div class="column">
+                <h3>Products</h3>
+            </div>
+            <div class="column">
+                <a href="/admin/products/new" class="button is-info admin add-new">Add New</a>
+            </div>
+        </div>
+
+        <table class="table is-fullwidth is-striped is-hoverable">
+            <thead>
+                <th>Title</th>
+                <th>Type</th>
+                <th class="has-text-right">Price</th>
+                <th class="has-text-right">Shipping</th>
+                <th class="has-text-right">Actions</th>
+            </thead>
+            {{#each products}}
+
+            <tr>
+                <td>{{title}}</td>
+                <td>{{productType}}</td>
+                <td class="has-text-right">{{toDollars price}}</td>
+                <td class="has-text-right">{{toDollars shippingCost}}</td>
+                <td class="has-text-right">
+                    <a href={{productEditUrl id}} class="button is-info admin">Edit</a>
+                    <a href={{productDeleteUrl id}} class="button is-danger admin">Delete</a>
+                </td>
+            </tr>
+
+            {{/each }}
+
+        </table>
+
+
+    </section>
+
+    <section id="user-menu">
+        <div class="columns">
+            <div class="column">
+                <h3>Users</h3>
+            </div>
+            <div class="column">
+                <a href="/signup" class="button is-info admin add-new">Add New</a>
+            </div>
+        </div>
+
+        <table class="table is-fullwidth is-striped is-hoverable">
+            <thead>
+                <th>User Email</th>
+                <th>Admin Status</th>
+                <th>Actions</th>
+            </thead>
+            {{#each users}}
+
+            <tr>
+                <td>{{email}}</td>
+                <td>{{#if admin}}
+                    Is Administrator
+                    {{else }}
+                    Not Admin
+                    {{/if}}
+                </td>
+                <td>
+                    <a href="" class="button is-info admin">Edit</a>
+                    <a href="" class="button is-danger admin">Delete</a>
+                </td>
+            </tr>
+
+            {{/each }}
+
+        </table>
+
+    </section>
+
+    <section id="sales-menu">
+        <h2>Sales menu in development</h2>
+    </section>
+
+
+</div>
+
+<script src="/js/dashboard-tabs.js"></script>
+
+{{>footer }}

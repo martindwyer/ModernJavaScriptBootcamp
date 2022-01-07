@@ -7,15 +7,21 @@
 <div class="columns is-multiline products">
     {{#each products}}
     <div class="column is-3 product">
-        <img src={{bookImageUrl}} />
-    
-        <h6>{{title}}</h6>
+        <div class="product-image">
+            <img src={{bookImageUrl}} />
+        </div>
+        
+        <div class="product-info">
+<h6>{{title}}</h6>
         <h6>{{author}}</h6>
         <p>{{formatDate publicationDate}}</p>
         <p>{{price}}</p>
+
+        </div>
+        
         <div class="columns">
-            <div class="column"><a class="button is-primary">View Detail</a></div>
-            <div class="column"><a class="button is-warning">Add To Cart</a></div>
+            <div class="column"><a class="button is-link">View Detail</a></div>
+            <div class="column"><a class="button is-success">Add To Cart</a></div>
         </div>
         
         

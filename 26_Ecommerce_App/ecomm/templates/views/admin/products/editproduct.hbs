@@ -1,0 +1,63 @@
+{{>header}}
+
+<div class="page-content">
+
+    <form id="new-product-form" method="POST" >
+        <h3>Edit Product Form</h3>
+
+        <div class="select">
+            <select name="productType">
+                <option value="">Choose the type of product</option>
+                <option value="book" {{isBook product.productType}} >Book</option>
+                <option value="electronic" {{isElectronic product.productType}}>Electronic</option>
+                <option value="paperback" {{isEssential product.productType}}>Essential</option>
+            </select>
+        </div>
+        <input class="input is-normal" type="text" name="title" placeholder="Title" value="{{product.title}}" />
+        <input class="input is-normal" type="date" name="publicationDate" placeholder="Publication Date"  value={{dateFormValue product.publicationDate}}  />
+        <input class="input is-normal" type="text" name="author" placeholder="Author"  value="{{product.author}}"  />
+        <div class="select">
+            <select name="coverType">
+                <option value="">Choose cover type on this book</option>
+                <option value="ebook" {{isEbook product.coverType}}>e-Book</option>
+                <option value="hardcover" {{isHardcover product.coverType}}>Hardcover</option>
+                <option value="paperback" {{isPaperback product.coverType}}>Paperback</option>
+            </select>
+        </div>
+        <h4 style="margin-top: 1rem;">Target Audience</h4>
+        <label class="checkbox">
+            <input type="checkbox" id="upTo7" name="upToSeven" value="yes" {{isChecked product.upToSeven}}>
+                Up to 7 yrs old
+        </label>
+        <label class="checkbox" >
+            <input type="checkbox" id="8to12" name="eightToTwelve" value="yes" {{isChecked product.eightToTwelve}}  >
+                8 to 12 yrs old
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="teen" name="teen" value="yes" {{isChecked product.teen}} >
+                Teen
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="youngAdult" name="youngAdult" value="yes" {{isChecked product.youngAdult}} >
+                Young Adult
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="adult" name="adult" value="yes" {{isChecked product.adult}} >
+                Adult
+        </label>
+        <label class="checkbox">
+            <input type="checkbox" id="senior" name="senior" value="yes" {{isChecked product.senior}} >
+                Seniors
+        </label>
+        <input class="input is-normal" type="number" step=".01" name="price" placeholder="Price" value={{product.price}} />
+        <input class="input is-normal" type="number" step=".01" name="shippingCost" placeholder="Shipping Cost" value={{product.shippingCost}} />
+        <input class="input is-normal" type="text" name="publisher" placeholder="Publisher" value="{{product.publisher}}" />
+        <input class="input is-normal" type="text" name="pages" placeholder="Pages in the book" value={{product.pages}} />
+      
+        <input class="input is-normal" type="text" name="bookImageUrl" placeholder="image" value={{product.bookImageUrl}} />
+        <button class="button is-primary">Submit</button>
+    </form>
+</div>
+
+
+{{>footer}}

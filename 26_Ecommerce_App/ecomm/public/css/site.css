@@ -132,14 +132,59 @@ form button {
 }
 
 .products .product {
+
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+
 }
+
+.products .product .product-image {
+    display: flex;
+
+    height: 400px;
+    align-items: flex-end;
+
+
+}
+
+.products .product .product-info {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 1.56rem;
+    padding-bottom: 1.5rem;
+}
+
+
+.product-image img {
+    width: 100% !important;
+    height: auto !important;
+}
+
 
 .product>div {
     justify-content: center;
+}
+
+#user-menu .add-new,
+#product-menu .add-new {
+    float: right;
+}
+
+#user-menu .admin,
+#product-menu .admin {
+    width: 6rem;
+}
+
+
+#user-menu,
+#sales-menu {
+    display: none;
 }
 
 footer {

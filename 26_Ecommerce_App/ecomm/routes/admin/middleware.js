@@ -9,7 +9,6 @@ module.exports = {
   },
   async isAdmin(req, res, next) {
     let user = await User.findById(req.session.userId);
-    console.log(user);
     if (!user.admin) {
       return res.render("unauthorized", {
         message:
