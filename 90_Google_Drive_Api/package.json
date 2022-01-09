@@ -1,0 +1,14 @@
+{
+  "name": "google-drive-api",
+  "version": "1.0.0",
+  "description": "A simple app demonstrating use of google drive api",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Martin Dwyer",
+  "license": "ISC",
+  "dependencies": {
+    "googleapis": "^92.0.0"
+  }
+}
