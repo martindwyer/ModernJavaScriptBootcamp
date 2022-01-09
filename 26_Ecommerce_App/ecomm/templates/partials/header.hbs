@@ -40,21 +40,16 @@
 
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-start">
+                    {{#if email}}
                     <a href="/" class="navbar-item">
                         Home
-                    </a>
+                    </a>                  
 
+                    <a href="/store" class="navbar-item">
+                        Shop
+                    </a>
+                    {{/if }}
                     {{#if admin}}
-
-                    <a href="/admin/products" class="navbar-item">
-                        Products
-                    </a>
-                    <a href="/admin/users" class="navbar-item">
-                        Users
-                    </a>
-                    <a href="/admin/sales" class="navbar-item">
-                        Sales
-                    </a>
                     <a href="/admin" class="navbar-item">
                         Dashboard
                     </a>

@@ -138,8 +138,17 @@ form button {
     justify-content: flex-end;
 
     padding-bottom: 2rem;
-    margin-bottom: 3rem;
 
+
+}
+
+.products .product hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
 }
 
 .products .product .product-image {

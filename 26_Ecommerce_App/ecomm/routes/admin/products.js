@@ -6,6 +6,16 @@ const { isLoggedIn, isAdmin } = require("./middleware");
 const Product = require("../../repositories/product");
 const User = require("../../repositories/user");
 
+router.get("/store", isLoggedIn, async (req, res) => {
+  const products = await Product.find({});
+  const user = await User.findById(req.session.userId);
+  sessionParams.user = user;
+  sessionParams.email = user.email;
+  sessionParams.admin = user.admin;
+  sessionParams.products = products;
+  res.render("./store/index", sessionParams);
+});
+
 router.get("/admin/products", isLoggedIn, isAdmin, async (req, res) => {
   const products = await Product.find({});
   const user = await User.findById(req.session.userId);

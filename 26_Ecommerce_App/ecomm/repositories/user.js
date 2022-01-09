@@ -12,6 +12,50 @@ const userSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  fullName: {
+    type: String,
+    default: "",
+  },
+  streetAddress: {
+    type: String,
+    default: "",
+  },
+  unitNumber: {
+    type: String,
+    default: "",
+  },
+  city: {
+    type: String,
+    default: "",
+  },
+  state: {
+    type: String,
+    default: "",
+  },
+  zip: {
+    type: String,
+    default: "",
+  },
+  shipToStreetAddress: {
+    type: String,
+    default: "",
+  },
+  shipToUnitNumber: {
+    type: String,
+    default: "",
+  },
+  shipToCity: {
+    type: String,
+    default: "",
+  },
+  shipToState: {
+    type: String,
+    default: "",
+  },
+  shipToZip: {
+    type: String,
+    default: "",
+  },
 });
 
 const User = mongoose.model("User", userSchema);
