@@ -14,9 +14,10 @@
 
   <form id="signup-form" method="POST">
     <h6>Provide the required information in order to sign up for {{ title }} </h6>
-    <input class="input is-normal" name="email" id="signup-email" placeholder="email" />
-    <input  class="input is-normal" name="password" id="signup-password" placeholder="password" />
-    <input  class="input is-normal" name="passwordConfirmation" id="signup-password-confirm" placeholder="password confirmation" />
+    <input type="text" class="input isnormal" name="fullName" id="full-name" placeholder="Full Name" required />
+    <input class="input is-normal" type="text" name="email" id="signup-email" placeholder="email" required />
+    <input  class="input is-normal" type="password" name="password" id="signup-password" placeholder="password" required />
+    <input  class="input is-normal" type="password" name="passwordConfirmation" id="signup-password-confirm" placeholder="password confirmation" required />
     <button class="button is-primary">Sign Up</button>
     <div id="signup-error"></div>
   </form>

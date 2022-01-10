@@ -18,7 +18,11 @@ hbs.registerHelper("dateFormValue", function (dateString) {
 });
 
 hbs.registerHelper("toDollars", function (num) {
-  return "$" + num.toFixed(2);
+  if (num) {
+    return "$" + num.toFixed(2);
+  } else {
+    return "$0.00";
+  }
 });
 
 hbs.registerHelper("productEditUrl", function (id) {
@@ -27,6 +31,26 @@ hbs.registerHelper("productEditUrl", function (id) {
 
 hbs.registerHelper("productDeleteUrl", function (id) {
   return "/admin/products/" + id + "/delete";
+});
+
+hbs.registerHelper("addProductToCart", function (id) {
+  return "/cart/products/" + id;
+});
+
+hbs.registerHelper("userDeleteUrl", function (id) {
+  return "/admin/users/" + id + "/delete";
+});
+
+hbs.registerHelper("userEditUrl", function (id) {
+  return "/admin/users/" + id + "/edit";
+});
+
+hbs.registerHelper("userAllowUrl", function (id) {
+  return "/admin/users/" + id + "/allow";
+});
+
+hbs.registerHelper("userRevokeUrl", function (id) {
+  return "/admin/users/" + id + "/revoke";
 });
 
 hbs.registerHelper("isChecked", function (val) {
@@ -83,6 +107,14 @@ hbs.registerHelper("isHardcover", function (val) {
   } else {
     return "";
   }
+});
+
+hbs.registerHelper("linkToCart", function (id) {
+  return "/store/cart/" + id;
+});
+
+hbs.registerHelper("removeCartItem", function (id) {
+  return "/store/cart/" + id + "/delete";
 });
 
 module.export = hbs;

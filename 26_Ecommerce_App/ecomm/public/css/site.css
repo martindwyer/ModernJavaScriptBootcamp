@@ -185,9 +185,14 @@ form button {
     float: right;
 }
 
-#user-menu .admin,
+
 #product-menu .admin {
     width: 6rem;
+}
+
+#user-menu .admin {
+    min-width: 6rem;
+
 }
 
 
@@ -195,6 +200,38 @@ form button {
 #sales-menu {
     display: none;
 }
+
+#navbarBasicExample>div.navbar-end>div>a {
+    text-decoration: none;
+
+
+}
+
+#cart-icon {
+    color: hsl(171, 100%, 41%);
+    padding-right: 2rem;
+    font-size: 2rem;
+}
+
+#cart-items {
+    color: hsl(217, 71%, 53%) !important;
+    position: relative;
+    left: -1.25rem;
+    bottom: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+#cart-table a {
+    text-decoration: none;
+    color: hsl(171, 100%, 41%);
+}
+
+#cart-table i {
+    color: hsl(348, 100%, 61%);
+    font-size: 1.5rem;
+}
+
 
 footer {
     position: fixed;

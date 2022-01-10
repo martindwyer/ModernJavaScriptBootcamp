@@ -6,11 +6,13 @@ const User = require("../repositories/user");
 const siteRouter = express.Router();
 const authRouter = require("./admin/auth");
 const productRouter = require("./admin/products");
+const cartRouter = require("./admin/carts");
 const adminRouter = require("./admin/dashboard");
 
 siteRouter.use(authRouter);
 siteRouter.use(productRouter);
 siteRouter.use(adminRouter);
+siteRouter.use(cartRouter);
 
 siteRouter.get("/", async (req, res) => {
   sessionParams.title = "E-Commerce Store";

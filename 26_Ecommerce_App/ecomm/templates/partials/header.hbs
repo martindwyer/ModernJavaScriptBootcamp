@@ -58,7 +58,11 @@
                 </div>
 
                 <div class="navbar-end">
+                    
                     <div class="navbar-item">
+                        {{#if cartId}}
+                    <a href={{linkToCart cartId}}><i id="cart-icon" class="fa fa-shopping-cart is-primary"><span id="cart-items">{{cartItems}}</span></i></a>
+                    {{/if}}
                         <div class="buttons">
                             {{#if email}}
                             <div id="welcome-message">Welcome {{email}} !</div>

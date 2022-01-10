@@ -55,29 +55,32 @@
                 <h3>Users</h3>
             </div>
             <div class="column">
-                <a href="/signup" class="button is-info admin add-new">Add New</a>
+                <a href="/admin/users/add" class="button is-info admin add-new">Add New</a>
             </div>
         </div>
 
         <table class="table is-fullwidth is-striped is-hoverable">
             <thead>
-                <th>User Email</th>
+                <th>Name</th>
+                <th>Email</th>
                 <th>Admin Status</th>
-                <th>Actions</th>
+                <th class="has-text-right">Actions</th>
             </thead>
             {{#each users}}
 
             <tr>
+                <td>{{#if fullName}}{{fullName}}{{/if}}</td>
                 <td>{{email}}</td>
                 <td>{{#if admin}}
-                    Is Administrator
-                    {{else }}
-                    Not Admin
+                    <a href={{userRevokeUrl id}} class="button is-warning admin">Revoke Admin</a>
+                    {{else}}
+                    <a href={{userAllowUrl id}} class="button is-primary admin">Make Admin</a>
                     {{/if}}
                 </td>
-                <td>
-                    <a href="" class="button is-info admin">Edit</a>
-                    <a href="" class="button is-danger admin">Delete</a>
+                <td class="has-text-right">
+                    
+                    <a href={{userEditUrl id}} class="button is-info admin">Edit</a>
+                    <a href={{userDeleteUrl id}} class="button is-danger admin">Delete</a>
                 </td>
             </tr>
 

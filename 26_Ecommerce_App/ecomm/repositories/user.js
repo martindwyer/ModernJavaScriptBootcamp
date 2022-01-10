@@ -36,6 +36,10 @@ const userSchema = new Schema({
     type: String,
     default: "",
   },
+  billingIsShipping: {
+    type: Boolean,
+    default: false,
+  },
   shipToStreetAddress: {
     type: String,
     default: "",

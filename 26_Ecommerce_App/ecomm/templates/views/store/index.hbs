@@ -2,33 +2,36 @@
 
 <div id="products-page" class="page-content">
 
-<h2 class="has-text-centered">Products</h2>
+    <h2 class="has-text-centered">Products</h2>
 
-<div class="columns is-multiline products">
-    {{#each products}}
-    <div class="column is-3 product">
-        <div class="product-image">
-            <img src={{bookImageUrl}} />
-        </div>
-        
-        <div class="product-info">
-<h6>{{title}}</h6>
-        <h6>{{author}}</h6>
-        <p>{{formatDate publicationDate}}</p>
-        <p>{{price}}</p>
+    <div class="columns is-multiline products">
+        {{#each products}}
+        <div class="column is-3 product">
+            <div class="product-image">
+                <img src={{bookImageUrl}} />
+            </div>
+
+            <div class="product-info">
+                <h6>{{title}}</h6>
+                <h6>{{author}}</h6>
+                <p>{{formatDate publicationDate}}</p>
+                <p>{{price}}</p>
+
+            </div>
+
+            <div class="columns">
+                <div class="column"><a class="button is-link">View Detail&nbsp;<i class="fas fa-location-arrow"></i></a></div>
+                <div class="column">
+                    <a href={{addProductToCart id}} class="button is-success">Add To Cart&nbsp;
+                        <i class="fa fa-shopping-cart"></i></a></form>
+                </div>
+            </div>
+
+            <hr />
 
         </div>
-        
-        <div class="columns">
-            <div class="column"><a class="button is-link">View Detail</a></div>
-            <div class="column"><a class="button is-success">Add To Cart</a></div>
-        </div>
-        
-        <hr/>
-        
+        {{/each}}
     </div>
-    {{/each}}
-</div>
 
 
 

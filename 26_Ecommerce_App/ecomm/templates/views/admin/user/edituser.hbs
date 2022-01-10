@@ -1,0 +1,41 @@
+
+
+{{>header}}
+
+<h3 class="has-text-centered mt-6">Edit User</h3>
+
+<form method="POST" id="edit-user-form">
+
+    <input type="text" class="input isnormal" name="fullName" id="full-name" placeholder="Full Name" value="{{editUser.fullName}}" required />
+    <input class="input is-normal" type="text" name="email" id="signup-email" placeholder="email"  value="{{editUser.email}}" required />
+
+    <h5 class="mt-6">Billing Address</h5>
+
+    <input type="text" class="input isnormal" name="streetAddress" id="streetAddress" placeholder="Street Address" value="{{editUser.streetAddress}}" />
+    <input type="text" class="input isnormal" name="unitNumber" id="unitNumber" placeholder="Unit Location"  value="{{editUser.unitNumber}}" />
+    <input type="text" class="input isnormal" name="city" id="city" placeholder="City"  value="{{editUser.city}}" />
+    <input type="text" class="input isnormal" name="state" id="state" placeholder="State"  value="{{editUser.state}}" />
+    <input type="text" class="input isnormal" name="zip" id="zip" placeholder="Zip Code"  value="{{editUser.zip}}" />
+
+    <h5 class="mt-6">Shipping Address</h5>
+
+    <label class="checkbox">
+        <input type="checkbox" id="billingIsShipping" name="billingIsShipping" value="yes" {{#if editUser.billingIsShipping}} checked {{/if}}>
+        Ship to billing address
+    </label>
+
+    <input type="text" class="input isnormal" name="shipToStreetAddress" id="shipToStreetAddress" placeholder="Street Address"  value="{{editUser.shipToStreetAddress}}"
+        />
+    <input type="text" class="input isnormal" name="shipToUnitNumber" id="shipToUnitNumber" placeholder="Unit Location"  value="{{editUser.shipToUnitNumber}}"
+        />
+    <input type="text" class="input isnormal" name="shipToCity" id="shipToCity" placeholder="City"  value="{{editUser.shipToCity}}" />
+    <input type="text" class="input isnormal" name="shipToState" id="shipToState" placeholder="State"  value="{{editUser.shipToState}}" />
+    <input type="text" class="input isnormal" name="shipToZip" id="shipToZip" placeholder="Zip Code"  value="{{editUser.shipToZip}}" />
+
+    <button class="button is-primary mb-6">Submit</button>
+
+</form>
+
+<script src="/js/ship-to-billing.js"></script>
+
+{{>footer }}

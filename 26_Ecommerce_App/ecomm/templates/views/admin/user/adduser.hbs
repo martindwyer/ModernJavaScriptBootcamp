@@ -1,0 +1,40 @@
+{{>header}}
+
+<h3 class="has-text-centered mt-6">Add User</h3>
+
+<form method="POST" id="edit-user-form">
+
+    <input type="text" class="input isnormal" name="fullName" id="full-name" placeholder="Full Name" required />
+    <input class="input is-normal" type="text" name="email" id="signup-email" placeholder="email" required />
+    <input  class="input is-normal" type="password" name="password" id="signup-password" placeholder="password" required />
+    <input  class="input is-normal" type="password" name="passwordConfirmation" id="signup-password-confirm" placeholder="password confirmation" required />
+
+    <h5 class="mt-6">Billing Address</h5>
+
+    <input type="text" class="input isnormal" name="streetAddress" id="streetAddress" placeholder="Street Address" />
+    <input type="text" class="input isnormal" name="unitNumber" id="unitNumber" placeholder="Unit Location"  />
+    <input type="text" class="input isnormal" name="city" id="city" placeholder="City" />
+    <input type="text" class="input isnormal" name="state" id="state" placeholder="State" />
+    <input type="text" class="input isnormal" name="zip" id="zip" placeholder="Zip Code" />
+
+    <h5 class="mt-6">Shipping Address</h5>
+
+    <label class="checkbox">
+        <input type="checkbox" id="billingIsShipping" name="billingIsShipping" value="yes">
+        Ship to billing address
+    </label>
+
+    <input type="text" class="input isnormal" name="shipToStreetAddress" id="shipToStreetAddress" placeholder="Street Address"
+        />
+    <input type="text" class="input isnormal" name="shipToUnitNumber" id="shipToUnitNumber" placeholder="Unit Location"
+        />
+    <input type="text" class="input isnormal" name="shipToCity" id="shipToCity" placeholder="City" />
+    <input type="text" class="input isnormal" name="shipToState" id="shipToState" placeholder="State" />
+    <input type="text" class="input isnormal" name="shipToZip" id="shipToZip" placeholder="Zip Code" />
+
+    <button class="button is-primary mb-6">Submit</button>
+
+</form>
+<script src="/js/ship-to-billing.js"></script>
+
+{{>footer }}

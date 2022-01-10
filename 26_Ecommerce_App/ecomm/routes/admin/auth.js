@@ -11,7 +11,7 @@ router.get("/signup", (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const { email, password, passwordConfirmation } = req.body;
+  const { fullName, email, password, passwordConfirmation } = req.body;
   const existingUser = await User.findOne({ email }).exec();
   if (existingUser) {
     return res.send("Email in use");
@@ -20,7 +20,12 @@ router.post("/signup", async (req, res) => {
   } else {
     const salt = await bcrypt.genSalt(10);
     const passHash = await bcrypt.hash(password, salt);
-    const user = new User({ email: email, password: passHash, admin: false });
+    const user = new User({
+      fullName: fullName,
+      email: email,
+      password: passHash,
+      admin: false,
+    });
     await user.save((err) => {
       if (err) {
         console.log(err);
@@ -75,6 +80,8 @@ router.get("/signout", (req, res) => {
   sessionParams.admin = null;
   sessionParams.product = null;
   sessionParams.products = null;
+  sessionParams.cartProducts = null;
+  sessionParams.cartItems = null;
   sessionParams.page = "Home";
   res.render("index", sessionParams);
 });
