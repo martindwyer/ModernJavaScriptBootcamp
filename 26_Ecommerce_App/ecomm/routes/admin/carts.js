@@ -5,10 +5,13 @@ const Product = require("../../repositories/product");
 const User = require("../../repositories/user");
 const Cart = require("../../repositories/cart");
 
-const sessionParams = require("../params");
+let { params, setParams } = require("../session/params");
 
 // Receive post request to add item to cart
 router.get("/cart/products/:id", async (req, res) => {
+  console.log(req);
+  console.log(req.session);
+
   // figure out the cart id?
   let cart;
 
@@ -51,11 +54,16 @@ router.get("/cart/products/:id", async (req, res) => {
     }
     cart.save();
   }
+  const user = await User.findById(req.session.userId);
 
-  sessionParams.cartId = cart.id;
-  sessionParams.cartItems = cart.items.length;
-
-  res.render("./store/index", sessionParams);
+  setParams({
+    user: user,
+    email: user.email,
+    admin: user.admin,
+    cartId: cart.id,
+    cartItems: cart.items.length,
+  });
+  res.render("./store/index", params);
 });
 
 // Receive get request to show all items in cart
@@ -74,27 +82,30 @@ router.get("/store/cart/:id", async (req, res) => {
     totalDue += productTotal;
 
     cartProducts.push({
+      cartId: req.params.id,
       product,
       quantity: item.quantity,
       productTotal: productTotal,
     });
   }
-  console.log(cartProducts);
-  sessionParams.cartProducts = cartProducts;
-  sessionParams.cartItems = cartProducts.length;
-  sessionParams.totalDue = totalDue;
 
-  res.render("./store/cart", sessionParams);
+  const user = await User.findById(req.session.userId);
+
+  setParams({
+    cartProducts: cartProducts,
+    cartItems: cartProducts.length,
+    totalDue: totalDue,
+    user: user,
+    email: user.email,
+    admin: user.admin,
+  });
+
+  res.render("./store/cart", params);
 });
 
 // Receive a post to delete items from cart
 router.get("/store/cart/:id/delete", async (req, res) => {
-  console.log(req.params.id);
-
   const cart = await Cart.findById(req.session.cartId);
-
-  console.log(cart.items);
-  console.log(cart.items.length);
   let items = cart.items;
   let newItems = [];
   for (item of items) {
@@ -123,12 +134,15 @@ router.get("/store/cart/:id/delete", async (req, res) => {
       productTotal: productTotal,
     });
   }
-  console.log(cartProducts);
-  sessionParams.cartProducts = cartProducts;
-  sessionParams.cartItems = cartProducts.length;
-  sessionParams.totalDue = totalDue;
 
-  res.render("./store/cart", sessionParams);
+  setParams({
+    cartId: req.params.id,
+    cartProducts: cartProducts,
+    cartItems: cartProducts.length,
+    totalDue: totalDue,
+  });
+
+  res.render("./store/cart", params);
 });
 
 module.exports = router;

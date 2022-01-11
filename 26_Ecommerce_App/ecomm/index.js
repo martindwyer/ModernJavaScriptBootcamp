@@ -22,7 +22,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Setting up cookie handling with keys for encryption
 app.use(
   cookieSession({
+    name: "session",
     keys: ["random!_+84j4)*(_!string"],
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours,
+    secure: false,
   })
 );
 

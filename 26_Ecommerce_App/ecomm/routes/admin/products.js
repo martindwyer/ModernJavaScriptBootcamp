@@ -1,37 +1,45 @@
 const express = require("express");
 const router = express.Router();
-
-const sessionParams = require("../params");
 const { isLoggedIn, isAdmin } = require("./middleware");
 const Product = require("../../repositories/product");
 const User = require("../../repositories/user");
+let { params, setParams } = require("../session/params");
 
 router.get("/store", isLoggedIn, async (req, res) => {
   const products = await Product.find({});
   const user = await User.findById(req.session.userId);
-  sessionParams.user = user;
-  sessionParams.email = user.email;
-  sessionParams.admin = user.admin;
-  sessionParams.products = products;
-  res.render("./store/index", sessionParams);
+
+  setParams({
+    user: user,
+    email: user.email,
+    admin: user.admin,
+    products: products,
+  });
+  console.log(params);
+  res.render("./store/index", params);
 });
 
 router.get("/admin/products", isLoggedIn, isAdmin, async (req, res) => {
   const products = await Product.find({});
   const user = await User.findById(req.session.userId);
-  sessionParams.user = user;
-  sessionParams.email = user.email;
-  sessionParams.admin = user.admin;
-  sessionParams.products = products;
-  res.render("./products/index", sessionParams);
+  setParams({
+    user: user,
+    email: user.email,
+    admin: user.admin,
+    products: products,
+  });
+  res.render("./products/index", params);
 });
 
 router.get("/admin/products/new", isLoggedIn, isAdmin, async (req, res) => {
   const user = await User.findById(req.session.userId);
-  sessionParams.user = user;
-  sessionParams.email = user.email;
-  sessionParams.admin = user.admin;
-  res.render("./admin/products/newproduct", sessionParams);
+  setParams({
+    user: user,
+    email: user.email,
+    admin: user.admin,
+    products: products,
+  });
+  res.render("./admin/products/newproduct", params);
 });
 
 router.post("/admin/products/new", isLoggedIn, isAdmin, async (req, res) => {
@@ -59,10 +67,12 @@ router.post("/admin/products/new", isLoggedIn, isAdmin, async (req, res) => {
     }
   });
   const user = await User.findById(req.session.userId);
-  sessionParams.user = user;
-  sessionParams.email = user.email;
-  sessionParams.admin = user.admin;
-  res.render("index", sessionParams);
+  setParams({
+    user: user,
+    email: user.email,
+    admin: user.admin,
+  });
+  res.render("index", params);
 });
 
 module.exports = router;

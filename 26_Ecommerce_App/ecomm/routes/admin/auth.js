@@ -1,13 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-
-const sessionParams = require("../params");
 const User = require("../../repositories/user");
+let { params, setParams, resetParams } = require("../session/params");
 
 router.get("/signup", (req, res) => {
-  sessionParams.page = "Sign Up";
-  res.render("./admin/auth/signup", sessionParams);
+  setParams({ page: "Sign Up" });
+  res.render("./admin/auth/signup", params);
 });
 
 router.post("/signup", async (req, res) => {
@@ -31,18 +30,23 @@ router.post("/signup", async (req, res) => {
         console.log(err);
       }
     });
-    sessionParams.user = user;
-    sessionParams.email = user.email;
-    sessionParams.admin = user.admin;
-    sessionParams.page = "Home";
+
+    setParams({
+      user: user,
+      email: user.email,
+      admin: user.admin,
+      page: "Home",
+    });
     req.session.userId = user.id; // added in by cookieSession
-    res.render("index", sessionParams);
+
+    res.render("index", params);
   }
 });
 
 router.get("/signin", (req, res) => {
-  sessionParams.page = "Sign In";
-  res.render("./admin/auth/signin", sessionParams);
+  setParams({ page: "Sign In" });
+
+  res.render("./admin/auth/signin", params);
 });
 
 router.post("/signin", async (req, res) => {
@@ -51,7 +55,7 @@ router.post("/signin", async (req, res) => {
   const user = await User.findOne({ email: email });
 
   if (!user) {
-    return res.render("./auth/signin", { emailError: "Email not found" });
+    return res.render("./admin/auth/signin", { emailError: "Email not found" });
   }
 
   const validPassword = await bcrypt.compare(password, user.password);
@@ -61,29 +65,23 @@ router.post("/signin", async (req, res) => {
       passwordError: "Email and password combination not on file",
     });
   }
-
   req.session.userId = user.id;
-  req.session.admin = user.admin;
 
-  sessionParams.user = user;
-  sessionParams.email = user.email;
-  sessionParams.admin = user.admin;
-  sessionParams.page = "Home";
+  setParams({
+    user: user,
+    email: user.email,
+    admin: user.admin,
+    page: "Home",
+  });
 
-  res.render("index", sessionParams);
+  res.render("index", params);
 });
 
 router.get("/signout", (req, res) => {
-  req.session = null;
-  sessionParams.user = null;
-  sessionParams.email = null;
-  sessionParams.admin = null;
-  sessionParams.product = null;
-  sessionParams.products = null;
-  sessionParams.cartProducts = null;
-  sessionParams.cartItems = null;
-  sessionParams.page = "Home";
-  res.render("index", sessionParams);
+  req.session.userId = null;
+  resetParams();
+  setParams({ page: "Home" });
+  res.render("index", params);
 });
 
 module.exports = router;

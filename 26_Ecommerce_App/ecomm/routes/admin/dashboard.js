@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-
-const sessionParams = require("../params");
 const { isLoggedIn, isAdmin } = require("./middleware");
+let { params, setParams } = require("../session/params");
 
 const Product = require("../../repositories/product");
 const User = require("../../repositories/user");
@@ -12,12 +11,14 @@ router.get("/admin", isLoggedIn, isAdmin, async (req, res) => {
   const products = await Product.find({});
   const users = await User.find();
   const user = await User.findById(req.session.userId);
-  sessionParams.user = user;
-  sessionParams.email = user.email;
-  sessionParams.admin = user.admin;
-  sessionParams.products = products;
-  sessionParams.users = users;
-  res.render("./admin/index", sessionParams);
+  setParams({
+    user: user,
+    users: users,
+    email: user.email,
+    admin: user.admin,
+    products: products,
+  });
+  res.render("./admin/index", params);
 });
 
 router.get(
@@ -26,8 +27,8 @@ router.get(
   isAdmin,
   async (req, res) => {
     const product = await Product.findById(req.params.id);
-    sessionParams.product = product;
-    res.render("./admin/products/editproduct", sessionParams);
+    setParams({ product: product });
+    res.render("./admin/products/editproduct", params);
   }
 );
 
@@ -57,14 +58,19 @@ router.post(
 
     await Product.findByIdAndUpdate(req.params.id, update);
 
-    sessionParams.users = await User.find();
-    sessionParams.user = await User.findById(req.session.userId);
-    sessionParams.email = sessionParams.user.email;
-    sessionParams.admin = sessionParams.user.admin;
+    const users = await User.find();
+    const products = await Product.find();
+    const user = await User.findById(req.session.userId);
 
-    sessionParams.products = await Product.find();
+    setParams({
+      user: user,
+      email: user.email,
+      admin: user.admin,
+      users: users,
+      products: products,
+    });
 
-    res.render("./admin", sessionParams);
+    res.render("./admin", params);
   }
 );
 
@@ -74,17 +80,23 @@ router.get(
   isAdmin,
   async (req, res) => {
     await Product.findByIdAndDelete(req.params.id);
-    sessionParams.products = await Product.find();
-    res.render("./admin", sessionParams);
+
+    const products = await Product.find();
+
+    setParams({ products: products });
+
+    res.render("./admin", params);
   }
 );
 
 router.get("/admin/users/add", isLoggedIn, isAdmin, async (req, res) => {
   const user = await User.findById(req.session.userId);
-  sessionParams.user = user;
-  sessionParams.email = user.email;
-  sessionParams.admin = user.admin;
-  res.render("./admin/user/adduser", sessionParams);
+  setParams({
+    user: user,
+    email: user.email,
+    admin: user.admin,
+  });
+  res.render("./admin/user/adduser", params);
 });
 
 router.post("/admin/users/add", isLoggedIn, isAdmin, async (req, res) => {
@@ -119,24 +131,34 @@ router.post("/admin/users/add", isLoggedIn, isAdmin, async (req, res) => {
         console.log(err);
       }
     });
-    sessionParams.page = "Dashboard";
     const user = await User.findById(req.session.userId);
-    sessionParams.user = user;
-    sessionParams.email = user.email;
-    sessionParams.admin = user.admin;
-    sessionParams.users = await User.find();
-    sessionParams.products = await Product.find();
-    res.render("./admin/index", sessionParams);
+    const users = await User.find();
+    const products = await Product.find();
+
+    setParams({
+      page: "Dashboard",
+      user: user,
+      email: user.email,
+      admin: user.admin,
+      users: users,
+      products: products,
+    });
+
+    res.render("./admin/index", params);
   }
 });
 
 router.get("/admin/users/:id/edit", isLoggedIn, isAdmin, async (req, res) => {
   const user = await User.findById(req.session.userId);
-  sessionParams.user = user;
-  sessionParams.email = user.email;
-  sessionParams.admin = user.admin;
-  sessionParams.editUser = await User.findById(req.params.id);
-  res.render("./admin/user/edituser", sessionParams);
+  const editUser = await User.findById(req.params.id);
+  setParams({
+    page: "Dashboard",
+    user: user,
+    editUser: editUser,
+    email: user.email,
+    admin: user.admin,
+  });
+  res.render("./admin/user/edituser", params);
 });
 
 router.post("/admin/users/:id/edit", isLoggedIn, isAdmin, async (req, res) => {
@@ -158,20 +180,26 @@ router.post("/admin/users/:id/edit", isLoggedIn, isAdmin, async (req, res) => {
 
   await User.findByIdAndUpdate(req.params.id, update);
 
-  sessionParams.users = await User.find();
-  sessionParams.user = await User.findById(req.session.userId);
-  sessionParams.email = sessionParams.user.email;
-  sessionParams.admin = sessionParams.user.admin;
+  const users = await User.find();
+  const user = await User.findById(req.session.userId);
+  const products = await Product.find();
 
-  sessionParams.products = await Product.find();
+  setParams({
+    user: user,
+    email: user.email,
+    admin: user.admin,
+    users: users,
+    products: products,
+  });
 
-  res.render("./admin", sessionParams);
+  res.render("./admin", params);
 });
 
 router.get("/admin/users/:id/delete", isLoggedIn, isAdmin, async (req, res) => {
   await User.findByIdAndDelete(req.params.id);
-  sessionParams.users = await User.find();
-  res.render("./admin", sessionParams);
+  const users = await User.find();
+  setParams({ users: users });
+  res.render("./admin", params);
 });
 
 router.get("/admin/users/:id/allow", isLoggedIn, isAdmin, async (req, res) => {
@@ -179,8 +207,9 @@ router.get("/admin/users/:id/allow", isLoggedIn, isAdmin, async (req, res) => {
     admin: true,
   };
   await User.findByIdAndUpdate(req.params.id, update);
-  sessionParams.users = await User.find();
-  res.render("./admin", sessionParams);
+  const users = await User.find();
+  setParams({ users: users });
+  res.render("./admin", params);
 });
 
 router.get("/admin/users/:id/revoke", isLoggedIn, isAdmin, async (req, res) => {
@@ -188,8 +217,9 @@ router.get("/admin/users/:id/revoke", isLoggedIn, isAdmin, async (req, res) => {
     admin: false,
   };
   await User.findByIdAndUpdate(req.params.id, update);
-  sessionParams.users = await User.find();
-  res.render("./admin", sessionParams);
+  const users = await User.find();
+  setParams({ users: users });
+  res.render("./admin", params);
 });
 
 module.exports = router;
